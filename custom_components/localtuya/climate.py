@@ -181,12 +181,13 @@ class LocaltuyaClimate(LocalTuyaEntity, ClimateEntity):
         self._has_presets = self.has_config(CONF_ECO_DP) or self.has_config(
             CONF_PRESET_DP
         )
+        self._enable_turn_on_off_backwards_compatibility = False
         _LOGGER.debug("Initialized climate [%s]", self.name)
 
     @property
     def supported_features(self):
         """Flag supported features."""
-        supported_features = 0
+        supported_features = ClimateEntityFeature.TURN_OFF | ClimateEntityFeature.TURN_ON
         if self.has_config(CONF_TARGET_TEMPERATURE_DP):
             supported_features = supported_features | ClimateEntityFeature.TARGET_TEMPERATURE
         if self.has_config(CONF_MAX_TEMP_DP):
